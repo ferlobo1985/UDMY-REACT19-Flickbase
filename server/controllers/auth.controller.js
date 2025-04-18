@@ -20,7 +20,7 @@ const authController = {
             next(error)
         }
     },
-    async signin(req,res){
+    async signin(req,res, next){
         try {
             const { email, password } =  req.body
             const user = await authService.signInWithEmailAndPassword(email, password);
@@ -31,7 +31,8 @@ const authController = {
                 token
             })
         } catch (error) {
-            res.status(status.BAD_REQUEST).send(error.message)
+            // res.status(status.BAD_REQUEST).send(error.message)
+            next(error)
         }
     }
 }
