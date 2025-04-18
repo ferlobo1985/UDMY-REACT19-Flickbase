@@ -2,7 +2,7 @@ const { authService }  = require('../services');
 const { status } = require('http-status');
 
 const authController = {
-    async register(req,res){
+    async register(req,res,next){
         try {
             const { email,password } = req.body;
             const user = await authService.createUser(email,password);
@@ -16,7 +16,8 @@ const authController = {
                 token
             })
         } catch (error) {
-            res.status(status.BAD_REQUEST).send(error.message)
+            // res.status(status.BAD_REQUEST).send(error.message)
+            next(error)
         }
     },
     async signin(req,res){
