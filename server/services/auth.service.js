@@ -34,7 +34,7 @@ const signInWithEmailAndPassword = async(email,password)=>{
         }
         return user;
     } catch (error) {
-        return error
+        throw error
     }
 }
 
