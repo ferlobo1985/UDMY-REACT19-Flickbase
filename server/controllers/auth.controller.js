@@ -34,6 +34,9 @@ const authController = {
             // res.status(status.BAD_REQUEST).send(error.message)
             next(error)
         }
+    },
+    async isauth(req,res, next){
+        res.json(req.user)
     }
 }
 
