@@ -9,7 +9,15 @@ const findUserById = async(_id) => {
     return await User.findById(_id)
 }
 
+const userObj = (user) => {
+    return {
+        ...user._doc,
+        _id: user._doc._id.toHexString()
+    }
+}
+
 module.exports = {
     findUserByEmail,
-    findUserById
+    findUserById,
+    userObj
 }

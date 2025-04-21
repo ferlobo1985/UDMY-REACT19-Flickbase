@@ -9,7 +9,10 @@ const usersController = {
             if(!user){
                 throw new ApiError(status.NOT_FOUND,'User not found')
             }
-            res.json(user)
+            //res.json(user)
+            res.json(res.locals.permission.filter(
+                usersService.userObj(user)
+            ))
         } catch (error) {
             next(error)
         }
