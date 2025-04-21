@@ -1,4 +1,4 @@
-const { usersService } = require('../services')
+const { usersService, authService } = require('../services')
 const { status } =  require('http-status');
 const { ApiError } = require('../middleware/apiError')
 
@@ -25,6 +25,22 @@ const usersController = {
             ))
         } catch (error) {
             next(error)
+        }
+    },
+    async updateUserEmail(req,res,next){
+        try {
+            const user = await usersService.updateUserEmail(req);
+            const token = await authService.genAuthToken(user);
+
+            // send email
+
+            res.cookie('x-access-token',token)
+            .send({
+                user:res.locals.permission.filter(usersService.userObj(user)),
+                token
+            })
+        } catch (error) {
+            next(error) 
         }
     }
 }
