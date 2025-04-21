@@ -1,4 +1,4 @@
-const { usersService, authService } = require('../services')
+const { usersService, authService, emailService } = require('../services')
 const { status } =  require('http-status');
 const { ApiError } = require('../middleware/apiError')
 
@@ -33,6 +33,7 @@ const usersController = {
             const token = await authService.genAuthToken(user);
 
             // send email
+            await emailService.registerEmail(user.email, user)
 
             res.cookie('x-access-token',token)
             .send({

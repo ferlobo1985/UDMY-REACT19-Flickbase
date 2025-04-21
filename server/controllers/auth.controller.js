@@ -1,4 +1,4 @@
-const { authService }  = require('../services');
+const { authService, emailService }  = require('../services');
 const { status } = require('http-status');
 
 const authController = {
@@ -9,6 +9,7 @@ const authController = {
             const token = await authService.genAuthToken(user);
 
             // SEND VERIFICATION EMAIL
+            await emailService.registerEmail(email, user)
 
             res.cookie('x-access-token',token)
             .status(status.CREATED).send({
