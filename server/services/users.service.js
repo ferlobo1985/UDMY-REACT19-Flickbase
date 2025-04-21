@@ -1,6 +1,8 @@
 const { User } = require('../models/user');
 const { status } = require('http-status');
 const { ApiError } = require('../middleware/apiError')
+const jwt = require('jsonwebtoken');
+require('dotenv').config();
 
 const findUserByEmail = async(email)=>{
     return await User.findOne({email});
@@ -63,10 +65,40 @@ const updateUserEmail = async(req)=>{
     }
 }
 
+const validateToken = (token) =>{
+    try {
+        return jwt.verify(token,process.env.DB_SECRET)
+    } catch (error) {
+        throw new ApiError(status.NOT_FOUND, 'Invalid token')
+    }
+}
+
+const updateVerify = async(id) => {
+    try {
+        const user = await User.findOneAndUpdate(
+            {_id:id},
+            {
+                "$set":{
+                    verified:true
+                }
+            },
+            { new: true }
+        );
+        if(!user){
+            throw new ApiError(status.NOT_FOUND,'User not found')
+        }
+        return user;
+    } catch (error) {
+        throw error
+    }   
+}
+
 module.exports = {
     findUserByEmail,
     findUserById,
     userObj,
     updateUserProfile,
-    updateUserEmail
+    updateUserEmail,
+    validateToken,
+    updateVerify
 }

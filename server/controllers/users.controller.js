@@ -43,6 +43,20 @@ const usersController = {
         } catch (error) {
             next(error) 
         }
+    },
+    async verifyAccount(req,res,next){
+        try {
+            // /api/users/verify?validation=jxnkxbckb
+            const token = usersService.validateToken(req.query.validation);
+            const user = await usersService.updateVerify(token.sub)
+
+            res.status(status.CREATED).send({
+                email:user.email,
+                verified: true
+            })
+        } catch (error) {
+            next(error)
+        }
     }
 }
 
