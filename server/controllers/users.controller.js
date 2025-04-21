@@ -16,6 +16,16 @@ const usersController = {
         } catch (error) {
             next(error)
         }
+    },
+    async updateProfile(req,res,next){
+        try {
+            const user = await usersService.updateUserProfile(req);
+            res.json(res.locals.permission.filter(
+                usersService.userObj(user)
+            ))
+        } catch (error) {
+            next(error)
+        }
     }
 }
 
