@@ -21,6 +21,7 @@ router.route('/users/article/:id')
 
 router.route('/all')
 .get(articlesController.getAllArticles)
+.post(articlesController.getMoreArticles)
 
 // CATEGORIES
 router.route('/categories')

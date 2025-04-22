@@ -88,6 +88,28 @@ const allArticles = async(req) =>{
     }
 }
 
+const moreArticles = async(req) => {
+    const sortby = req.body.sortby || "_id";
+    const order = req.body.order || "desc";
+    const limit = req.body.limit || 2;
+    const skip = req.body.skip || 0;
+
+    try {
+        const articles = await Article
+        .find({status:'public'})
+        .populate('category')
+        .sort([
+            [sortby,order]
+        ])
+        .skip(skip)
+        .limit(limit)
+        return articles;
+    } catch (error) {
+        throw error
+    }
+}
+
+
 const addCategory = async(body)=>{
     try {
         //// VALIDATION
@@ -118,5 +140,6 @@ module.exports = {
     updateArticleById,
     deleteArticleById,
     getUserArticleById,
-    allArticles
+    allArticles,
+    moreArticles
 }
