@@ -68,6 +68,26 @@ const getUserArticleById = async(_id) =>{
     }
 }
 
+const allArticles = async(req) =>{
+    // /api/articles/all?limit=2&sortby=_id&order=desc
+    const sortby = req.query.sortby || "_id";
+    const order = req.query.order || "desc";
+    const limit = req.query.limit || 2
+
+    try {
+        const articles = await Article
+        .find({status:'public'})
+        .populate('category')
+        .sort([
+            [sortby,order]
+        ])
+        .limit(limit)
+        return articles;
+    } catch (error) {
+        throw error
+    }
+}
+
 const addCategory = async(body)=>{
     try {
         //// VALIDATION
@@ -97,5 +117,6 @@ module.exports = {
     getArticleById,
     updateArticleById,
     deleteArticleById,
-    getUserArticleById
+    getUserArticleById,
+    allArticles
 }

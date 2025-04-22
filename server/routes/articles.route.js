@@ -19,6 +19,9 @@ router.route('/article/:id')
 router.route('/users/article/:id')
 .get(articlesController.getUserArticleById)
 
+router.route('/all')
+.get(articlesController.getAllArticles)
+
 // CATEGORIES
 router.route('/categories')
 .post(auth('createAny','categories'), articlesController.createCategory)
