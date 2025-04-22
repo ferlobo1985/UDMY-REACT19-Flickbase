@@ -109,6 +109,47 @@ const moreArticles = async(req) => {
     }
 }
 
+const paginateAdminArticles = async(req) => {
+    try {
+        let aggQueryArray = [];
+
+        /// KEYWORD
+        if(req.body.keyword && req.body.keyword != ''){
+            const re = new RegExp(`${req.body.keyword}`,'gi');
+            aggQueryArray.push(
+                {$match:{title:{$regex:re}}}
+            )
+        }
+
+        /// CATEGORY
+        aggQueryArray.push(
+            { $lookup:
+                {
+                    from:'categories',
+                    localField: 'category',
+                    foreignField: '_id',
+                    as: 'category'
+                }
+            },
+            { $unwind:"$category"}
+        )
+        
+
+        let aggQuery =  Article.aggregate(aggQueryArray)
+        const limit = req.body.limit ? req.body.limit : 5;
+        const options = {
+            page: req.body.page,
+            limit,
+            sort:{_id:'desc'}
+        }
+        const articles = await Article.aggregatePaginate(aggQuery,options)
+        return articles
+    } catch (error) {
+        throw error;
+    }
+} 
+
+
 
 const addCategory = async(body)=>{
     try {
@@ -141,5 +182,6 @@ module.exports = {
     deleteArticleById,
     getUserArticleById,
     allArticles,
-    moreArticles
+    moreArticles,
+    paginateAdminArticles
 }
