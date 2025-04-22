@@ -1,12 +1,13 @@
 const express = require('express');
 const router = express.Router();
 const articlesController = require('../controllers/articles.controller');
+const { addArticleValidator } = require('../middleware/validation')
 
 // AUTH
 const auth = require('../middleware/auth');
 
 
-router.post('/',auth('createAny','articles'),articlesController.createArticle)
+router.post('/',auth('createAny','articles'),addArticleValidator,articlesController.createArticle)
 
 
 // CATEGORIES
