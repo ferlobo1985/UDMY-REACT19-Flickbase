@@ -1,7 +1,21 @@
 const { Category } = require('../models/category');
+const { Article } = require('../models/article')
 const { status } = require('http-status');
 const { ApiError } = require('../middleware/apiError')
 
+
+const addArticle = async(body)=>{
+    try {
+        const article = new Article({
+            ...body,
+            score:parseInt(body.score)
+        });
+        await article.save();
+        return article;
+    } catch (error) {
+        throw error
+    }
+}
 
 const addCategory = async(body)=>{
     try {
@@ -27,5 +41,6 @@ const findAllCategories = async() => {
 
 module.exports = {
     addCategory,
-    findAllCategories
+    findAllCategories,
+    addArticle
 }

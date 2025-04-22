@@ -4,8 +4,8 @@ const { status } = require('http-status');
 const articlesController = {
     async createArticle(req,res,next){
         try {
-            /// req.body > add article
-            // send response
+            const article = await articlesService.addArticle(req.body);
+            res.json(article);
         } catch (error) {
             next(error)
         }
