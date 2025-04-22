@@ -7,7 +7,10 @@ const { addArticleValidator } = require('../middleware/validation')
 const auth = require('../middleware/auth');
 
 
-router.post('/',auth('createAny','articles'),addArticleValidator,articlesController.createArticle)
+router.post('/',auth('createAny','articles'),addArticleValidator,articlesController.createArticle);
+
+router.route('/article/:id')
+.get(auth('readAny','articles'),articlesController.getArticleById)
 
 
 // CATEGORIES
