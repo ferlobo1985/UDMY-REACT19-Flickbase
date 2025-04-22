@@ -12,6 +12,7 @@ router.post('/',auth('createAny','articles'),addArticleValidator,articlesControl
 router.route('/article/:id')
 .get(auth('readAny','articles'),articlesController.getArticleById)
 .patch(auth('updateAny','articles'),articlesController.updateArticleById)
+.delete(auth('deleteAny','articles'),articlesController.deleteArticleById)
 
 
 // CATEGORIES

@@ -44,6 +44,16 @@ const updateArticleById = async(_id,body) =>{
     }
 }
 
+const deleteArticleById = async(_id)=>{
+    try {
+        const article = await Article.findByIdAndDelete(_id);
+        if(!article) throw new ApiError(status.NOT_FOUND,'Article not found')
+        return article;
+    } catch (error) {
+        throw error
+    }
+}
+
 const addCategory = async(body)=>{
     try {
         //// VALIDATION
@@ -71,5 +81,6 @@ module.exports = {
     findAllCategories,
     addArticle,
     getArticleById,
-    updateArticleById
+    updateArticleById,
+    deleteArticleById
 }
