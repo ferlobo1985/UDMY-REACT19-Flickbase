@@ -9,11 +9,15 @@ const auth = require('../middleware/auth');
 
 router.post('/',auth('createAny','articles'),addArticleValidator,articlesController.createArticle);
 
+/// ADMIN 
 router.route('/article/:id')
 .get(auth('readAny','articles'),articlesController.getArticleById)
 .patch(auth('updateAny','articles'),articlesController.updateArticleById)
 .delete(auth('deleteAny','articles'),articlesController.deleteArticleById)
 
+// USERS
+router.route('/users/article/:id')
+.get(articlesController.getUserArticleById)
 
 // CATEGORIES
 router.route('/categories')
