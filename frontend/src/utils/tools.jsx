@@ -1,4 +1,5 @@
 import CircularProgress from '@mui/material/CircularProgress';
+import { toast } from 'react-toastify'
 
 
 export const errorHelper = (formik,value) => ({
@@ -11,3 +12,20 @@ export const Loader = () => (
         <CircularProgress/>
     </div>
 )
+
+export const showToast = (type,msg) => {
+    switch(type){
+      case 'SUCCESS':
+          toast.success(msg,{
+            position:'bottom-right'
+          })
+      break;
+      case 'ERROR':
+          toast.error(msg,{
+            position:'bottom-right'
+          })
+      break;
+      default:
+        return false
+    }
+}
