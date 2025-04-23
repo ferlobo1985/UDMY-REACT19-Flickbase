@@ -1,4 +1,5 @@
 import { createAsyncThunk } from '@reduxjs/toolkit'
+import { errorGlobal, successGlobal } from '../reducers/notifications';
 
 import axios from 'axios';
 
@@ -10,10 +11,11 @@ export const registerUser = createAsyncThunk(
                 email:email,
                 password:password
             });
-            //// show a message
+            dispatch(successGlobal('Welcome!! Check yout email to validate'))
             return {data:request.data.user,auth:true}
         } catch (error) {
             /// show a message
+            dispatch(errorGlobal(error.response.data.message))
             throw error
         }
     }
@@ -28,9 +30,11 @@ export const signInUser = createAsyncThunk(
                 password:password
             });
             //// show a message
+            dispatch(successGlobal('Welcome!!'))
             return {data:request.data.user,auth:true}
         } catch (error) {
             /// show a message
+            dispatch(errorGlobal(error.response.data.message))
             throw error
         }
     }
