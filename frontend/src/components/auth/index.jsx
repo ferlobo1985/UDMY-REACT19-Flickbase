@@ -10,6 +10,7 @@ import TextField from '@mui/material/TextField'
 import Button from '@mui/material/Button'
 
 import { Loader, errorHelper } from '../../utils/tools'
+import { registerUser } from '../../store/actions/users'
 
 const Auth = ()=>{
     const [register, setRegister] = useState(false);
@@ -36,6 +37,7 @@ const Auth = ()=>{
     const onHandleSubmit = (values) => {
         if(register){
             /// dispatch register
+            dispatch(registerUser(values))
         } else {
             /// dispatch sign in
         }
@@ -45,7 +47,7 @@ const Auth = ()=>{
         <>
             <div className="auth_container">
                 <h1>Authenticate</h1>
-                { users.loding ?
+                { users.loading ?
                     <Loader/>
                 :
                     <Box 
