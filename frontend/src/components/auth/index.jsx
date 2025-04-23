@@ -9,6 +9,8 @@ import Box from '@mui/material/Box'
 import TextField from '@mui/material/TextField'
 import Button from '@mui/material/Button'
 
+import { Loader, errorHelper } from '../../utils/tools'
+
 const Auth = ()=>{
     const [register, setRegister] = useState(false);
     let navigate = useNavigate()
@@ -44,7 +46,7 @@ const Auth = ()=>{
             <div className="auth_container">
                 <h1>Authenticate</h1>
                 { users.loding ?
-                    <div>....loading</div>
+                    <Loader/>
                 :
                     <Box 
                         sx={{
@@ -59,6 +61,7 @@ const Auth = ()=>{
                             label="Enter your email"
                             variant="outlined"
                             {...formik.getFieldProps('email')}
+                            {...errorHelper(formik,'email')}
                         />
 
                         <TextField
@@ -67,8 +70,23 @@ const Auth = ()=>{
                             variant="outlined"
                             type="password"
                             {...formik.getFieldProps('password')}
+                            {...errorHelper(formik,'password')}
                         />
 
+                        <div className="mt-2">
+                            <Button variant="contained" color="primary" type="submit" size="large">
+                                {register ? 'Register':'Login'}
+                            </Button>
+                            <Button
+                                className="mt-3"
+                                variant="outlined"
+                                color="secondary"
+                                size="small"
+                                onClick={()=>setRegister(!register)}
+                            >
+                                Want to { !register ? 'Register':'Login'}
+                            </Button>
+                        </div>
 
                     </Box>
                 }
