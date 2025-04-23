@@ -6,8 +6,8 @@ export const errorHelper = (formik,value) => ({
   helperText: formik.errors[value] && formik.touched[value] ?  formik.errors[value]:null 
 })
 
-export const Loader = () => {
+export const Loader = () => (
     <div className='root_loader'>
         <CircularProgress/>
     </div>
-}
+)
