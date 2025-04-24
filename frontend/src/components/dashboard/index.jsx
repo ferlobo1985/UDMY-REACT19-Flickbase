@@ -1,8 +1,12 @@
 import {Outlet} from 'react-router';
+import AdminLayout from '../../hoc/adminLayout';
 
 const Dashboard = () => {
     return(
-        <Outlet/>
+        <AdminLayout>
+            <Outlet/>
+        </AdminLayout>
+       
     )
 }
 
