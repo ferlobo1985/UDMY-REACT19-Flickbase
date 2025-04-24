@@ -7,6 +7,7 @@ import { formValues, validation} from './validationSchema'
 import { useFormik, FieldArray, FormikProvider } from 'formik'
 
 /// REDUX
+import { getCategories } from '../../../../store/actions/articles'
 import { useSelector, useDispatch } from 'react-redux'
 
 // MUI
@@ -39,6 +40,9 @@ const AddArticle = () => {
         }
     })
 
+    useEffect(()=>{
+        dispatch(getCategories())
+    },[])
 
     return(
         <>
@@ -124,7 +128,29 @@ const AddArticle = () => {
 
                 <Divider className="mt-3 mb-3"/>
 
-                {/* CATEGORIES */}
+                <FormControl fullWidth>
+                    <InputLabel>Select a category</InputLabel>
+                    <Select
+                        name="category"
+                        label="Select a category"
+                        {...formik.getFieldProps('category')}
+                        error={formik.errors.category && formik.touched.category ? true:false }
+                    >
+                        <MenuItem value=""><em>None</em></MenuItem>
+                        { articles.categories ?
+                            articles.categories.map(item=>(
+                                <MenuItem key={item._id} value={item._id}>
+                                    {item.name}
+                                </MenuItem>
+                            ))
+                        :null}
+                    </Select>
+                    { formik.errors.category && formik.touched.category ?
+                        <FormHelperText error={true}>
+                            {formik.errors.category}
+                        </FormHelperText>
+                    :null}
+                </FormControl>
 
                 <Divider className="mt-3 mb-3"/>
 
