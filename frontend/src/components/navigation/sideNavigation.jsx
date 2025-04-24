@@ -17,7 +17,7 @@ import VpnKeyIcon from '@mui/icons-material/VpnKey'
 import DashboardIcon from '@mui/icons-material/Dashboard'
 
 
-const SideNavigation = ({users}) => {
+const SideNavigation = ({users,signOutUser}) => {
     const [state,setState] = useState(false)
 
     return(
@@ -62,7 +62,10 @@ const SideNavigation = ({users}) => {
                             </ListItemButton>
                         :
                             <ListItemButton
-                            onClick={()=>alert('Sign out')}
+                                onClick={()=>{
+                                    signOutUser();
+                                    setState(false)
+                                }}
                             >
                                 <ListItemIcon>
                                     <VpnKeyIcon/>
