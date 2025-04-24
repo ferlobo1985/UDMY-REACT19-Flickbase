@@ -43,7 +43,104 @@ const AddArticle = () => {
     return(
         <>
             <AdminTitle title="Add Article"/>
-            AddArticle
+            <form className="mt-3 article_form" onSubmit={formik.handleSubmit}>
+
+                <div className="form-group">
+                    <TextField
+                        style={{width:'100%'}}
+                        name="title"
+                        label="Enter a title"
+                        variant="outlined"
+                        {...formik.getFieldProps('title')}
+                        {...errorHelper(formik,'title')}
+                    />
+                </div>
+
+                <div className="form-group">
+                  WYSIWYG
+                </div>
+
+                <div className="form-group">
+                    <TextField
+                        style={{width:'100%'}}
+                        name="excerpt"
+                        label="Enter a short desc"
+                        variant="outlined"
+                        {...formik.getFieldProps('excerpt')}
+                        {...errorHelper(formik,'excerpt')}
+                        multiline
+                        rows={4}
+                    />
+                </div>
+
+                <Divider className="mt-3 mb-3"/>
+
+                <div className="form-group">
+                    <TextField
+                        style={{width:'100%'}}
+                        name="score"
+                        label="Enter a score"
+                        variant="outlined"
+                        {...formik.getFieldProps('score')}
+                        {...errorHelper(formik,'score')}
+                    />
+                </div>
+
+                <div className="form-group">
+                    actors
+                </div>
+
+                <div className="form-group">
+                    <TextField
+                        style={{width:'100%'}}
+                        name="director"
+                        label="Enter a director"
+                        variant="outlined"
+                        {...formik.getFieldProps('director')}
+                        {...errorHelper(formik,'director')}
+                    />
+                </div>
+
+                <Divider className="mt-3 mb-3"/>
+
+                <FormControl fullWidth>
+                    <InputLabel>Select a status</InputLabel>
+                    <Select
+                        name="status"
+                        label="Select a status"
+                        {...formik.getFieldProps('director')}
+                        error={formik.errors.status && formik.touched.status ? true:false }
+                    >
+                        <MenuItem value=""><em>None</em></MenuItem>
+                        <MenuItem value="draft">Draft</MenuItem>
+                        <MenuItem value="public">Public</MenuItem>
+                    </Select>
+                    { formik.errors.status && formik.touched.status ?
+                        <FormHelperText error={true}>
+                            {formik.errors.status}
+                        </FormHelperText>
+                    :null}
+                </FormControl>
+
+                <Divider className="mt-3 mb-3"/>
+
+                {/* CATEGORIES */}
+
+                <Divider className="mt-3 mb-3"/>
+
+                { articles.loading ?
+                    <Loader/>
+                :
+                    <Button
+                        variant="contained"
+                        color="primary"
+                        type="submit"
+                    >
+                        <span>Add article</span>
+                    </Button>
+                }
+
+            </form>
         </>
     )
 }
