@@ -11,6 +11,7 @@ import Button from '@mui/material/Button'
 
 import { Loader, errorHelper } from '../../utils/tools'
 import { registerUser, signInUser } from '../../store/actions/users'
+import PreventSignIn from "../../hoc/preventSignIn";
 
 const Auth = ()=>{
     const [register, setRegister] = useState(false);
@@ -21,7 +22,7 @@ const Auth = ()=>{
     const dispatch = useDispatch();
 
     const formik = useFormik({
-        initialValues:{email:'',password:''},
+        initialValues:{email:'francis@gmail.com',password:'testing123'},
         validationSchema:Yup.object({
             email:Yup.string()
             .required('Sorry, the email is required')
@@ -52,7 +53,7 @@ const Auth = ()=>{
 
 
     return(
-        <>
+        <PreventSignIn users={users}>
             <div className="auth_container">
                 <h1>Authenticate</h1>
                 { users.loading ?
@@ -102,7 +103,7 @@ const Auth = ()=>{
                 }
 
             </div>
-        </>
+        </PreventSignIn>
     )
 }
 
