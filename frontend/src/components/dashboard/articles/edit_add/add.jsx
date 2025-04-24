@@ -6,6 +6,8 @@ import { useNavigate } from 'react-router'
 import { formValues, validation} from './validationSchema'
 import { useFormik, FieldArray, FormikProvider } from 'formik'
 
+import WYSIWYG from '../../../../utils/form/tiptap'
+
 /// REDUX
 import { getCategories } from '../../../../store/actions/articles'
 import { useSelector, useDispatch } from 'react-redux'
@@ -41,6 +43,10 @@ const AddArticle = () => {
         }
     })
 
+    const handleEditorState = (state) => {
+        formik.setFieldValue('content',state,true)
+    }
+
     useEffect(()=>{
         dispatch(getCategories())
     },[])
@@ -62,7 +68,7 @@ const AddArticle = () => {
                 </div>
 
                 <div className="form-group">
-                  WYSIWYG
+                    <WYSIWYG setEditorState={(state)=>handleEditorState(state)}/>
                 </div>
 
                 <div className="form-group">
