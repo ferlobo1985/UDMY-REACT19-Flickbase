@@ -3,13 +3,13 @@ import { AdminTitle, errorHelper, Loader } from "../../../../utils/tools";
 import { useNavigate, useParams } from 'react-router'
 
 /// FORMIK
-import { formValues, validation} from './validationSchema'
+import { formValues, validation } from './validationSchema'
 import { useFormik, FieldArray, FormikProvider } from 'formik'
 
 import WYSIWYG from '../../../../utils/form/tiptap'
 
 /// REDUX
-import { getCategories, getAdminArticle } from '../../../../store/actions/articles'
+import { getCategories, getAdminArticle, updateArticle } from '../../../../store/actions/articles'
 import { useSelector, useDispatch } from 'react-redux'
 
 // MUI
@@ -47,6 +47,7 @@ const EditArticle = () => {
         validationSchema:validation,
         onSubmit:(values)=>{
            ////
+           dispatch(updateArticle({values,articleId}))
         }
     })
 
@@ -190,7 +191,7 @@ const EditArticle = () => {
                     <Select
                         name="status"
                         label="Select a status"
-                        {...formik.getFieldProps('director')}
+                        {...formik.getFieldProps('status')}
                         error={formik.errors.status && formik.touched.status ? true:false }
                     >
                         <MenuItem value=""><em>None</em></MenuItem>

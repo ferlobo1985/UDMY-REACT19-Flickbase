@@ -168,7 +168,7 @@ const AddArticle = () => {
                     <Select
                         name="status"
                         label="Select a status"
-                        {...formik.getFieldProps('director')}
+                        {...formik.getFieldProps('status')}
                         error={formik.errors.status && formik.touched.status ? true:false }
                     >
                         <MenuItem value=""><em>None</em></MenuItem>
