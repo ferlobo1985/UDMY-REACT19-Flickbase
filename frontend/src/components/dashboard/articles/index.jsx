@@ -3,6 +3,7 @@ import { useNavigate, Link as NavLink } from 'react-router'
 import { useSelector, useDispatch} from 'react-redux'
 import { AdminTitle } from "../../../utils/tools";
 
+import PaginateComponent from "./paginate";
 import { getPaginatedArticles } from '../../../store/actions/articles'
 
 import {
@@ -19,6 +20,15 @@ const AdminArticles = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
+    /// PAGINATE FUNC
+
+
+    const goToEdit = (id) => {
+        navigate(`/dashboard/articles/edit/${id}`)
+    }
+
+     /// PAGINATE FUNC
+
     useEffect(()=>{
         dispatch(getPaginatedArticles({}))
     },[])
@@ -26,7 +36,32 @@ const AdminArticles = () => {
     return(
         <>
             <AdminTitle title="Articles"/>
-            Admin articles index
+            <div className="articles_table">
+                <ButtonToolbar className="mb-3">
+                    <ButtonGroup className="me-2">
+                        <Button as={NavLink} to='/dashboard/articles/add' variant="secondary">
+                            Add article
+                        </Button>
+                    </ButtonGroup>
+                    <form>
+                        <InputGroup>
+                            <InputGroup.Text id="btngr1">@</InputGroup.Text>
+                            <FormControl
+                                type="text"
+                                placeholder="Search"
+                            />
+                        </InputGroup>
+                    </form>
+                </ButtonToolbar>
+
+                <>
+                    <PaginateComponent
+                        articles={articles.adminArticles}
+                        goToEdit={(id)=>goToEdit(id)}
+                    />
+                </>
+
+            </div>
         </>
     )
 }
