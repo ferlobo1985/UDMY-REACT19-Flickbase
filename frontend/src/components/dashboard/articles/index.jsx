@@ -21,7 +21,13 @@ const AdminArticles = () => {
     const navigate = useNavigate();
 
     /// PAGINATE FUNC
+    const goToPrevPage = (page) => {
+        dispatch(getPaginatedArticles({page}))
+    }
 
+    const goToNextPage = (page) => {
+        dispatch(getPaginatedArticles({page}))
+    }
 
     const goToEdit = (id) => {
         navigate(`/dashboard/articles/edit/${id}`)
@@ -58,6 +64,8 @@ const AdminArticles = () => {
                     <PaginateComponent
                         articles={articles.adminArticles}
                         goToEdit={(id)=>goToEdit(id)}
+                        goToPrevPage={(page)=>goToPrevPage(page)}
+                        goToNextPage={(page)=>goToNextPage(page)}
                     />
                 </>
 

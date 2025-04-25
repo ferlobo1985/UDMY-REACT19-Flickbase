@@ -1,9 +1,12 @@
 import { Table, Pagination } from "react-bootstrap";
 import { Loader } from '../../../utils/tools'
+import moment from 'moment'
 
 const PaginateComponent = ({
     articles,
-    goToEdit
+    goToEdit,
+    goToPrevPage,
+    goToNextPage
 }) => {
 
     return(
@@ -19,7 +22,7 @@ const PaginateComponent = ({
                 <tbody>
                 { articles.docs.map( item=>(
                 <tr key={item._id}>
-                    <td>{item.date}</td>
+                    <td>{moment(item.date).format('MMMM Do YYYY')}</td>
                     <td>{item.title}</td>
                     <td>{item.score}</td>
                     <td className="action_btn remove_btn"
@@ -41,6 +44,33 @@ const PaginateComponent = ({
                 ))}
                 </tbody>
             </Table>
+            <Pagination>
+                { articles.hasPrevPage ?
+                <>
+                    <Pagination.Prev
+                        onClick={()=>goToPrevPage(articles.prevPage)}
+                    />
+                    <Pagination.Item
+                        onClick={()=>goToPrevPage(articles.prevPage)}
+                    >
+                        {articles.prevPage}
+                    </Pagination.Item>
+                </>
+                :null}
+                <Pagination.Item active>{articles.page}</Pagination.Item>
+                { articles.hasNextPage ?
+                <>
+                    <Pagination.Item
+                        onClick={()=>goToNextPage(articles.nextPage)}
+                    >
+                        {articles.nextPage}
+                    </Pagination.Item>
+                    <Pagination.Next
+                        onClick={()=>goToNextPage(articles.nextPage)}
+                    />
+                </>
+                :null}
+            </Pagination>
         </> 
         :
         <Loader/>
