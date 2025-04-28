@@ -7,7 +7,8 @@ const PaginateComponent = ({
     goToEdit,
     goToPrevPage,
     goToNextPage,
-    handleStatusChange
+    handleStatusChange,
+    handleShow
 }) => {
 
     return(
@@ -29,7 +30,7 @@ const PaginateComponent = ({
                     <td>{item.title}</td>
                     <td>{item.score}</td>
                     <td className="action_btn remove_btn"
-                        onClick={()=>alert('remove')}
+                        onClick={()=> handleShow(item._id)}
                     >
                         Remove
                     </td>

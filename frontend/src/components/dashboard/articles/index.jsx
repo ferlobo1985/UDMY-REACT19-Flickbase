@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate, Link as NavLink } from 'react-router'
 import { useSelector, useDispatch} from 'react-redux'
 import { AdminTitle } from "../../../utils/tools";
@@ -21,6 +21,15 @@ const AdminArticles = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
+    const [removeAlert, setRemoveAlert] = useState(false) /// MODAL STATE
+    const [toRemove,setToRemove] = useState(null) // ID TO REMOVE
+
+    const handleClose = () => setRemoveAlert(false);
+    const handleShow = (id=null) => {
+        setToRemove(id);
+        setRemoveAlert(true)
+    }
+
     /// PAGINATE FUNC
     const goToPrevPage = (page) => {
         dispatch(getPaginatedArticles({page}))
@@ -37,6 +46,10 @@ const AdminArticles = () => {
     const handleStatusChange = (status,_id) =>{
         let newStatus = status === 'draft' ? 'public':'draft';
         dispatch(changeStatusArticle({newStatus,_id}))
+    }
+
+    const handleDelete = () => {
+
     }
 
      /// PAGINATE FUNC
@@ -73,8 +86,27 @@ const AdminArticles = () => {
                         goToPrevPage={(page)=>goToPrevPage(page)}
                         goToNextPage={(page)=>goToNextPage(page)}
                         handleStatusChange={(status,id)=>handleStatusChange(status,id)}
+                        handleShow={(id)=>handleShow(id)}
                     />
                 </>
+
+                <Modal show={removeAlert} onHide={handleClose}>
+                    <Modal.Header closeButton>
+                        <Modal.Title>Are you sure ?</Modal.Title>
+                    </Modal.Header>
+                    <Modal.Body>
+                        There is no going back
+                    </Modal.Body>
+                    <Modal.Footer>
+                        <Button variant="secondary" onClick={handleClose}>
+                            Oops, close this
+                        </Button>
+                        <Button variant="danger" onClick={()=>handleDelete()} >
+                            Delete
+                        </Button>
+                    </Modal.Footer>
+                </Modal>
+
 
             </div>
         </>
