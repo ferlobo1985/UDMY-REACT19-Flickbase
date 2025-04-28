@@ -4,7 +4,7 @@ import { useSelector, useDispatch} from 'react-redux'
 import { AdminTitle } from "../../../utils/tools";
 
 import PaginateComponent from "./paginate";
-import { getPaginatedArticles, changeStatusArticle } from '../../../store/actions/articles'
+import { getPaginatedArticles, changeStatusArticle, removeArticle } from '../../../store/actions/articles'
 
 import {
     Modal,
@@ -49,7 +49,12 @@ const AdminArticles = () => {
     }
 
     const handleDelete = () => {
-
+        dispatch(removeArticle(toRemove))
+        .unwrap()
+        .finally(()=>{
+            setRemoveAlert(false);
+            setToRemove(null);
+        })
     }
 
      /// PAGINATE FUNC
