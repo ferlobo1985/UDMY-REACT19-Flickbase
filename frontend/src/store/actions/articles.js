@@ -74,3 +74,29 @@ export const getCategories = createAsyncThunk(
         }
     }
 )
+
+export const changeStatusArticle = createAsyncThunk(
+    'articles/changeStatusArticle',
+    async({newStatus,_id},{dispatch, getState}) =>{
+        try {
+            const request = await axios.patch(`/api/articles/article/${_id}`,{
+                status:newStatus
+            },getAuthHeader());
+
+            let article = request.data;
+            /// PREVIOUS STATE
+            let state = getState().articles.adminArticles.docs;
+            /// FIND THE POSITION
+            let position = state.findIndex( article => article._id === _id);
+            /// WE CANNOT MUTATE STATE DIRECTLY
+            const newState = [...state];
+            newState[position] = article
+
+            dispatch(successGlobal('Status changed !!!'))
+            return newState;
+        } catch (error) {
+            dispatch(errorGlobal(error.response.data.message))
+            throw error;
+        }
+    }
+)

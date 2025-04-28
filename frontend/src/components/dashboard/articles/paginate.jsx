@@ -6,7 +6,8 @@ const PaginateComponent = ({
     articles,
     goToEdit,
     goToPrevPage,
-    goToNextPage
+    goToNextPage,
+    handleStatusChange
 }) => {
 
     return(
@@ -15,9 +16,11 @@ const PaginateComponent = ({
         <>
             <Table striped bordered hover>
                 <thead>
-                    <th>Created</th>
-                    <th>Title</th>
-                    <th>Score</th>
+                    <tr>
+                        <th>Created</th>
+                        <th>Title</th>
+                        <th>Score</th>
+                    </tr>
                 </thead>
                 <tbody>
                 { articles.docs.map( item=>(
@@ -36,7 +39,7 @@ const PaginateComponent = ({
                         Edit
                     </td>
                     <td className="action_btn status_btn"
-                        onClick={()=>alert('change status')}
+                        onClick={()=> handleStatusChange(item.status,item._id)}
                     >
                         {item.status}
                     </td>
